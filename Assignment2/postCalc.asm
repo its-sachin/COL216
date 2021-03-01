@@ -3,7 +3,7 @@
 
 
 # Decleration of originality :
-# complete code written solely by me,
+# complete code written solely by me.
 
 
 
