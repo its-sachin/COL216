@@ -9,8 +9,8 @@
 
 .data
     input : .asciiz "Enter the postfix expression: "
-    numChars : .word 982758
-    userinput :	  .space 982758
+    numChars : .word 65536
+    userinput :	  .space 65536
     inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n"
     output : .asciiz "Computation of given postfix expression is: "
     partial : .asciiz "Partial computation: "
