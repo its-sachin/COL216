@@ -9,8 +9,8 @@
 
 .data
     input : .asciiz "Enter the postfix expression: "
-    numChars : .word 65536
-    userinput :	  .space 65536
+    numChars : .word 1024
+    userinput :	  .space 1024
     inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n"
     output : .asciiz "Computation of given postfix expression is: "
     partial : .asciiz "Partial computation: "
@@ -28,7 +28,13 @@ main:
     # t5 -> counter
     # $s0 -> max value
 
-    lw $s0, numChars
+    la $s0, numChars
+    la $t0, 0
+    la $t1, 0
+    la $t2, 0
+    la $t3, 0
+    la $t4, 0
+    la $t5, 0
 
     # telling the user to enter number of points
     li $v0, 4
@@ -61,6 +67,13 @@ compute:
 number:
 
     bgt $t1, 57, invalidend
+
+    add $t2, $t0, -1
+    lb $t3, 0($t2)
+
+    beq $t3, 42, invalidend
+    beq $t3, 43, invalidend
+    beq $t3, 45, invalidend
 
     addi $sp, $sp, -4
     add $t4, $t4, 1
