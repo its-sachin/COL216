@@ -11,12 +11,12 @@
     input : .asciiz "Enter the postfix expression: "
     numChars : .word 1024
     userinput :	  .space 1024
-    inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n"
+    inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n\n"
     output : .asciiz "Computation of given postfix expression is: "
     partial : .asciiz "Partial computation: "
-    partialWar : .asciiz "WARNING: Your input is not complete postfix, ans above is partial answer.\n"
-    unboundWar : .asciiz "WARNING: Your input is too big, tanswer might be frivolous.\n"
-    br : .asciiz "\n"
+    partialWar : .asciiz "WARNING: Your input is not complete postfix, ans above is partial answer.\n\n"
+    unboundWar : .asciiz "WARNING: Your input is too big, tanswer might be frivolous.\n\n"
+    br : .asciiz "\n\n"
 .text
 
 main:
@@ -53,27 +53,17 @@ main:
 compute:
 
     lb $t1, 0($t0)
+
     beq $t1, 10, end
     beqz $t1, end
 
     bge $t1, 48, number
 
-    beq $t1, 42, multiply
-    beq $t1, 43, addition
-    beq $t1, 45, subtract
-
-    j invalidend
+    j expression
 
 number:
 
     bgt $t1, 57, invalidend
-
-    add $t2, $t0, -1
-    lb $t3, 0($t2)
-
-    beq $t3, 42, invalidend
-    beq $t3, 43, invalidend
-    beq $t3, 45, invalidend
 
     addi $sp, $sp, -4
     add $t4, $t4, 1
@@ -84,51 +74,53 @@ number:
 
     add $t0, $t0, 1
     add $t5, $t5, 1
+
     j compute
 
-multiply:
+expression:
+
+    beq $t5, 0, invalidend
+    beq $t5, 1, invalidend
 
     lw $t2, 0($sp)
     lw $t3, 4($sp)
+
+    add $t0, $t0, 1
+    add $t5, $t5, 1
+    add $t4, $t4, -1
+
+    beq $t1, 42, multiply
+    beq $t1, 43, addition
+    beq $t1, 45, subtract
+
+    j invalidend
+
+
+multiply:
+
     mul $t2, $t2, $t3
 
     addi $sp, $sp, 4
     sw $t2, 0($sp)
 
-    add $t4, $t4, -1
-
-    add $t0, $t0, 1
-    add $t5, $t5, 1
     j compute
 
 addition:
 
-    lw $t2, 0($sp)
-    lw $t3, 4($sp)
     add $t2, $t2, $t3
 
     addi $sp, $sp, 4
     sw $t2, 0($sp)
 
-    add $t4, $t4, -1
-
-    add $t0, $t0, 1
-    add $t5, $t5, 1
     j compute
 
 subtract:
 
-    lw $t2, 0($sp)
-    lw $t3, 4($sp)
     sub $t2, $t3, $t2
 
     addi $sp, $sp, 4
     sw $t2, 0($sp)
-    
-    add $t4, $t4, -1
 
-    add $t0, $t0, 1
-    add $t5, $t5, 1
     j compute
 
 
@@ -175,7 +167,32 @@ unBound:
     li $v0, 10
     syscall
 
+invalidendLast:
+
+    bne $t5, 1, invalidend
+
+    li $v0, 4
+    la $a0, output
+    syscall
+
+    li $v0, 1
+    lw $a0, 0($sp)
+    syscall
+
+    li $v0, 4
+    la $a0, br
+    syscall
+
+    li $v0, 10
+    syscall 
+
 end: 
+
+    add $t0, $t0, -1
+    lb $t1, 0($t0)
+    
+    bgt $t1, 47, invalidendLast
+
 
     add $t5, $t5, 1
     bne $t4, 1, partialAns
