@@ -1,0 +1,234 @@
+
+---------------------------------Test cases for BASE CASE-----------------------
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 0
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 0.5
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: -1
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 0
+Area under the curve formed by joining given points with straight line is: 0.5
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 0
+Area under the curve formed by joining given points with straight line is: 0.5
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 0
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: -1
+Area under the curve formed by joining given points with straight line is: 0.5
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: -1
+Area under the curve formed by joining given points with straight line is: 0.5
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: -1
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 0.5
+
+
+
+-------------------------Test case for Addition check for BASE CASE-----------------
+Number of Points: 3
+Point 1 X Co-ordinate: 1
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 2
+Point 2 Y co-ordinate: 2
+Point 3 X Co-ordinate: 3
+Point 3 Y co-ordinate: 3
+Area under the curve formed by joining given points with straight line is: 4
+
+
+
+------------------------Test case for WRONG INPUT----------------------------------
+Number of Points: -9
+INVALID-N : Number of points should be greater than 0 to compute area. 
+
+Number of Points: 2
+Point 1 X Co-ordinate: 12
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: -9
+Point 2 Y co-ordinate: 1
+UNSORTED-X : X Co-ordinates should be provided sorted. 
+
+
+
+-----------------------Test case provided in the question-------------------------------
+Number of Points: 5
+Point 1 X Co-ordinate: 1
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 3
+Point 2 Y co-ordinate: 4
+Point 3 X Co-ordinate: 5
+Point 3 Y co-ordinate: 3
+Point 4 X Co-ordinate: 6
+Point 4 Y co-ordinate: 7
+Point 5 X Co-ordinate: 9
+Point 5 Y co-ordinate: 5
+Area under the curve formed by joining given points with straight line is: 35
+
+
+
+---------------------------Small test case checked by hand computation----------------------
+Number of Points: 2
+Point 1 X Co-ordinate: -9
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 10
+
+Number of Points: 5
+Point 1 X Co-ordinate: -8
+Point 1 Y co-ordinate: 33
+Point 2 X Co-ordinate: -3
+Point 2 Y co-ordinate: -4
+Point 3 X Co-ordinate: 0
+Point 3 Y co-ordinate: 5
+Point 4 X Co-ordinate: 23
+Point 4 Y co-ordinate: 12
+Point 5 X Co-ordinate: 44
+Point 5 Y co-ordinate: 21
+Area under the curve formed by joining given points with straight line is: 623.495495495495561
+
+Number of Points: 4
+Point 1 X Co-ordinate: 11
+Point 1 Y co-ordinate: -88
+Point 2 X Co-ordinate: 42
+Point 2 Y co-ordinate: 12
+Point 3 X Co-ordinate: 44
+Point 3 Y co-ordinate: -9
+Point 4 X Co-ordinate: 50
+Point 4 Y co-ordinate: -55
+Area under the curve formed by joining given points with straight line is: 1425.35428571428565
+
+Number of Points: 5
+Point 1 X Co-ordinate: -20
+Point 1 Y co-ordinate: -20
+Point 2 X Co-ordinate: -10
+Point 2 Y co-ordinate: 20
+Point 3 X Co-ordinate: 0
+Point 3 Y co-ordinate: -20
+Point 4 X Co-ordinate: 10
+Point 4 Y co-ordinate: 20
+Point 5 X Co-ordinate: 20
+Point 5 Y co-ordinate: -20
+Area under the curve formed by joining given points with straight line is: 400
+
+
+
+
+
+---------------------------Small test case checked with friend. -----------------------------
+Number of Points: 5
+Point 1 X Co-ordinate: 477
+Point 1 Y co-ordinate: -61
+Point 2 X Co-ordinate: 1081
+Point 2 Y co-ordinate: -342
+Point 3 X Co-ordinate: 1901
+Point 3 Y co-ordinate: -67
+Point 4 X Co-ordinate: 2116
+Point 4 Y co-ordinate: -455
+Point 5 X Co-ordinate: 2651
+Point 5 Y co-ordinate: -218
+Area under the curve formed by joining given points with straight line is: 525538.5
+
+Number of Points: 4
+Point 1 X Co-ordinate: 1
+Point 1 Y co-ordinate: 10
+Point 2 X Co-ordinate: 3
+Point 2 Y co-ordinate: -23
+Point 3 X Co-ordinate: 21
+Point 3 Y co-ordinate: 7
+Point 4 X Co-ordinate: 22
+Point 4 Y co-ordinate: -1
+Area under the curve formed by joining given points with straight line is: 195.58560606060604
+
+
+
+
+----------------------------Test cases with large values--------------------------------
+Number of Points: 2
+Point 1 X Co-ordinate: 1234567890
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 1234567891
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 1
+
+Number of Points: 2
+Point 1 X Co-ordinate: 45
+Point 1 Y co-ordinate: 1234567890
+Point 2 X Co-ordinate: 46
+Point 2 Y co-ordinate: 1234567890
+  Exception 12  [Arithmetic overflow]  occurred and ignored
+Area under the curve formed by joining given points with straight line is: 617283945
+Number of Points: INVALID-N : Number of points should be greater than 0 to compute area. 
+
+Number of Points: 2
+Point 1 X Co-ordinate: 45
+Point 1 Y co-ordinate: 61111111
+Point 2 X Co-ordinate: 46
+Point 2 Y co-ordinate: 611111111
+Area under the curve formed by joining given points with straight line is: 336111111
+
+Number of Points: 2
+Point 1 X Co-ordinate: 2
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 60000000
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 59999998
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 1
+Point 2 X Co-ordinate: 600000000
+Point 2 Y co-ordinate: 1
+Area under the curve formed by joining given points with straight line is: 600000000
+
+Number of Points: 2
+Point 1 X Co-ordinate: 1
+Point 1 Y co-ordinate: 00
+Point 2 X Co-ordinate: 600000000
+Point 2 Y co-ordinate: 2
+Area under the curve formed by joining given points with straight line is: 599999999
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 600000000
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 600000000
+Area under the curve formed by joining given points with straight line is: 600000000
+
+
+
+----------------------LIMIT REACHED from (6*10^8 to 6*10^9 ie around 2^32)-----------------------
+----------------------hence justifying the overflow contraint in design----------------------------
+
+Number of Points: 2
+Point 1 X Co-ordinate: 0
+Point 1 Y co-ordinate: 6000000000
+Point 2 X Co-ordinate: 1
+Point 2 Y co-ordinate: 6000000000
+  Exception 12  [Arithmetic overflow]  occurred and ignored
+Area under the curve formed by joining given points with straight line is: 852516352
+
+
+
+
+
+
