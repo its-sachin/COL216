@@ -1,0 +1,88 @@
+Enter the postfix expression: 54+
+Computation of given postfix expression is: 9
+
+Enter the postfix expression: 54-
+Computation of given postfix expression is: 1
+
+Enter the postfix expression: 54*
+Computation of given postfix expression is: 20
+
+
+
+Enter the postfix expression: 23+4-
+Computation of given postfix expression is: 1
+
+Enter the postfix expression: 234*+
+Computation of given postfix expression is: 14
+
+Enter the postfix expression: 23+4+
+Computation of given postfix expression is: 9
+
+Enter the postfix expression: 23-4-
+Computation of given postfix expression is: -5
+
+Enter the postfix expression: 234*-
+Computation of given postfix expression is: -10
+
+Enter the postfix expression: 23-4+
+Computation of given postfix expression is: 3
+
+Enter the postfix expression: 23*4-
+Computation of given postfix expression is: 2
+
+Enter the postfix expression: 23*4*
+Computation of given postfix expression is: 24
+
+Enter the postfix expression: 23*4+
+Computation of given postfix expression is: 10
+
+
+Enter the postfix expression: +2
+INVALID-INPUT: Input is not in postfix
+
+Enter the postfix expression: 2+2
+INVALID-INPUT: Input is not in postfix
+
+Enter the postfix expression: 2+22+
+INVALID-INPUT: Input is not in postfix
+
+Enter the postfix expression: 22+2*3-66+
+Partial computation: 12
+
+WARNING: Your input is not complete postfix, ans above is partial answer.
+
+Enter the postfix expression: 23+4-
+Computation of given postfix expression is: 1
+
+Enter the postfix expression: as2++
+INVALID-INPUT: Input is not in postfix
+
+Enter the postfix expression: 23/
+INVALID-INPUT: Input is not in postfix
+
+Enter the postfix expression: 123456789+++++++++
+Partial computation: 46
+WARNING: Your input is not complete postfix, ans above is partial answer.
+
+
+Enter the postfix expression: 325*+
+Computation of given postfix expression is: 13
+
+Enter the postfix expression: 209*+5-9+9-
+Computation of given postfix expression is: -3
+
+Enter the postfix expression: 209*+5-8+9-
+Computation of given postfix expression is: -4
+
+Enter the postfix expression: 494*-7+2-8+16*5*-
+Computation of given postfix expression is: -49
+
+
+
+
+
+
+
+
+
+

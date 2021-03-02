@@ -130,10 +130,17 @@ void inToPost(char* input)
 // Driver code  
 int main()  
 {  
-	char input[100];
-	printf("enter expression\n");
-	scanf("%s", input);
-    inToPost(input);  
+    int num;
+    cout <<"enter number of expressions: ";
+    cin >> num;
+    while (num>0){
+        char input[100];
+        printf("enter expression\n");
+        scanf("%s", input);
+        inToPost(input);
+        printf("\n");
+        num -= 1;
+    }  
     return 0;  
 }  
 
