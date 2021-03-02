@@ -9,8 +9,8 @@
 
 .data
     input : .asciiz "Enter the postfix expression: "
-    numChars : .word 1024
-    userinput :	  .space 1024
+    numChars : .word 4
+    userinput :	  .space 4
     inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n\n"
     output : .asciiz "Computation of given postfix expression is: "
     partial : .asciiz "Partial computation: "
@@ -153,7 +153,9 @@ partialAns:
     la $a0, partialWar
     syscall
 
-    bge $t5, $s0, unBound
+    slt $t0, $t5, $s0
+    beq $t0, $zero, unBound
+    # bge $t5, $s0, unBound
 
     li $v0, 10
     syscall
@@ -191,7 +193,10 @@ end:
     add $t0, $t0, -1
     lb $t1, 0($t0)
     
-    bgt $t1, 47, invalidendLast
+    la $t2, 47
+    slt $t0, $t2, $t1
+    bne $t0, $zero, invalidendLast
+    # bgt $t1, 47, invalidendLast
 
 
     add $t5, $t5, 1
@@ -209,17 +214,9 @@ end:
     la $a0, br
     syscall
 
-    bge $t5, $s0, unBound
+    slt $t0, $t5, $s0
+    beq $t0, $zero, unBound
+    # bge $t5, $s0, unBound
 
     li $v0, 10
-    syscall    
-
-
-
-
-
-
-
-
-
-
+    syscall 
