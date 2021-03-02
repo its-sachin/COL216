@@ -50,6 +50,7 @@ main:
     add $t0, $zero, $a0
     add $t1, $zero, $a0
 
+# function that computes the partial computation in each step
 compute:
 
     lb $t1, 0($t0)
@@ -61,6 +62,8 @@ compute:
 
     j expression
 
+
+# if digit {0-9} is encountered, push them in stack
 number:
 
     bgt $t1, 57, invalidend
@@ -77,6 +80,7 @@ number:
 
     j compute
 
+# if any other character is encountered, then check if +,*,- and perform computation otherwise raise error
 expression:
 
     beq $t5, 0, invalidend
@@ -125,7 +129,7 @@ subtract:
 
 
 
-
+# If input is invalid
 invalidend:
 
     li $v0, 4
@@ -135,7 +139,11 @@ invalidend:
     li $v0, 10
     syscall
 
+# if input has less number of operations than digits
 partialAns:
+
+    slt $t0, $zero, $t4
+    beq $t0, $zero, invalidend
 
     li $v0, 4
     la $a0, partial
@@ -160,6 +168,7 @@ partialAns:
     li $v0, 10
     syscall
 
+#  if input has more than 1024 characters then warning is raised
 unBound:
 
     li $v0, 4
@@ -169,6 +178,7 @@ unBound:
     li $v0, 10
     syscall
 
+#  if only one digit is there, then print itself as answer
 invalidendLast:
 
     bne $t5, 1, invalidend
@@ -188,6 +198,7 @@ invalidendLast:
     li $v0, 10
     syscall 
 
+# printing final answer
 end: 
 
     add $t0, $t0, -1
