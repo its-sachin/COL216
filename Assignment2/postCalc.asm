@@ -9,14 +9,14 @@
 
 .data
     input : .asciiz "Enter the postfix expression: "
-    numChars : .word 4
-    userinput :	  .space 4
     inputInvalid : .asciiz "INVALID-INPUT: Input is not in postfix\n\n"
     output : .asciiz "Computation of given postfix expression is: "
     partial : .asciiz "Partial computation: "
     partialWar : .asciiz "WARNING: Your input is not complete postfix, ans above is partial answer.\n\n"
     unboundWar : .asciiz "WARNING: Your input is too big, tanswer might be frivolous.\n\n"
     br : .asciiz "\n\n"
+    numChars : .word 1024
+    userinput :	  .space 1024
 .text
 
 main:
