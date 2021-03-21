@@ -122,6 +122,7 @@ class MIPS {
     // -------------memory handling-------------------------
 
     bool activateRow(int rowNum){
+        bool out = false;
         if (rowNum != currRow){
             for (int i=0; i <256; i++){
                 if (isFirst == false){
@@ -130,17 +131,23 @@ class MIPS {
                 rowBuffer[i] = memory[rowNum][i];
             }
             if (isFirst == false) {
-                regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + rowDelay) +"\nDRAM: Writeback Row: " + to_string(currRow);
+                regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + rowDelay) +"\n  DRAM: Writeback Row: " + to_string(currRow);
                 clock += rowDelay;
+                out = true;
+            }
+            else {
+                out = false;
             }
             isFirst = false;
-            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + rowDelay) +"\nDRAM: Activate Row: " + to_string(rowNum);
+            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + rowDelay) +"\n  DRAM: Activate Row: " + to_string(rowNum);
             clock += rowDelay;
             currRow = rowNum;
             updates[0] += 1;
-            return true;
         }
-        return false;
+        else {
+            out = false;
+        }
+        return out;
     }
 
     void finalWrite() {
@@ -165,7 +172,7 @@ class MIPS {
             
             int rowNum = address/1024;
             updated=  activateRow(rowNum);
-            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + colDelay) +"\nDRAM: Column Access: " + to_string(colNum);
+            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + colDelay) +"\n  DRAM: Column Access: " + to_string(colNum);
             updates[1] += 1;
             clock += colDelay;
             rowBuffer[colNum] = num;
@@ -190,7 +197,7 @@ class MIPS {
             
             int rowNum = address/1024;
             updated = activateRow(rowNum);
-            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + colDelay) +"\nDRAM: Column Access: " + to_string(colNum);
+            regSteps = regSteps + "\nClock: " + to_string(clock+1) + "-"+ to_string(clock + colDelay) +"\n  DRAM: Column Access: " + to_string(colNum);
             clock += colDelay;
             updates[1] += 1;
             regs[reg] = rowBuffer[colNum];
@@ -221,12 +228,12 @@ class MIPS {
     void printRegSet(int k, vector<string> v){
         string task = v.at(0);
         if (task != "lw" && task != "sw"){
-            regSteps = regSteps + "\n" + "\n-----------------------------Line: " +to_string(k) + "----------------------------" +  "\nClock: " + to_string(clock) +"\nInstruction called: ";
+            regSteps = regSteps + "\n" + "\n-----------------------------Line: " +to_string(k) + "----------------------------" +  "\nClock: " + to_string(clock) +"\n  Instruction called: ";
 
             printInstSet(v);            
 
             if (task == "add" || task == "sub" || task == "mul" || task == "addi" || task == "slt"){
-                regSteps = regSteps+ "\nRegister modified : " + v.at(1) + " = " + to_string(regs[v.at(1)]); 
+                regSteps = regSteps+ "\n  Register modified : " + v.at(1) + " = " + to_string(regs[v.at(1)]); 
             }
 
             regSteps = regSteps + "\n";
@@ -253,6 +260,16 @@ class MIPS {
         }
     }
 
+    void printregVal() {
+        cout << "\nNon zero register values:"<<endl;
+
+         for (map<string, int>::iterator itr = regs.begin(); itr != regs.end(); ++itr) { 
+             if (itr->second != 0){
+                cout << itr->first  << " = " << itr->second << " | "; 
+             }
+        } 
+    }
+
     void printInstCount() {
         cout<< "Number of row buffer updates: " << updates[0]<<endl;
         cout<< "Total number of changes made in row buffer: " << updates[1]<< "\n" << endl;
@@ -262,6 +279,7 @@ class MIPS {
         for (int i =0; i< 10; i++) {
             cout << inst[i] << ": "<< instCount[i]<<endl;
         }
+        printregVal();
     }
 
     bool isError(vector<string> v,int line) {
@@ -434,8 +452,9 @@ class MIPS {
                 }
                 else if (a=="sw"){
                     clock += 1;
-                    regSteps = regSteps + "\n" +  "\n-----------------------------Line: " +to_string(k) + "----------------------------" + "\nClock: " + to_string(clock) +"\nInstruction called: ";
+                    regSteps = regSteps + "\n" +  "\n-----------------------------Line: " +to_string(k) + "----------------------------" + "\nClock: " + to_string(clock) +"\n  Instruction called: ";
                     printInstSet(v);
+                    regSteps += "\n  DRAM request issued";
                     int addModify;
                     if (v.size()==7){
                         bool done = sw(getRegValue(v.at(5))+stoi(v.at(3)),getRegValue(v.at(1)));
@@ -449,7 +468,7 @@ class MIPS {
                     }
                     instCount[8] += 1;
                     i++ ;      
-                    regSteps = regSteps+ "\nMemory address modified : " + to_string(addModify) + " = " + to_string(regs[v.at(1)]);        
+                    regSteps = regSteps+ "\n  Memory address modified : " + to_string(addModify) + " = " + to_string(regs[v.at(1)]);        
                 }
                 else if (a=="addi"){
                     feedReg(v.at(1),getRegValue(v.at(3))+stoi(v.at(5))); 
@@ -459,8 +478,9 @@ class MIPS {
                 }
                 else if (a=="lw"){
                     clock += 1;
-                    regSteps = regSteps + "\n"  +"\n-----------------------------Line: " +to_string(k) + "----------------------------"+  "\nClock: " + to_string(clock) + "\nInstruction called: ";
+                    regSteps = regSteps + "\n"  +"\n-----------------------------Line: " +to_string(k) + "----------------------------"+  "\nClock: " + to_string(clock) + "\n  Instruction called: ";
                     printInstSet(v);
+                    regSteps += "\n  DRAM request issued";
                     if (v.size()==7){
                         bool done = lw(getRegValue(v.at(5))+stoi(v.at(3)),v.at(1));
                         if (done == false) {return false;}
@@ -471,7 +491,7 @@ class MIPS {
                     }
                     instCount[7] += 1;
                     i++;
-                    regSteps = regSteps+ "\nRegister modified : " + v.at(1) + " = " + to_string(regs[v.at(1)]);
+                    regSteps = regSteps+ "\n  Register modified : " + v.at(1) + " = " + to_string(regs[v.at(1)]);
                 }
                 else if (a=="j"){
                     int a=stoi(v.at(1));
@@ -556,6 +576,7 @@ class DRAM {
     bool isFirst = true;
     string regSteps;
     int initialClock;
+    bool updated = true;
 
     void start(vector<string> v){
         currInst = v;
@@ -587,27 +608,35 @@ class DRAM {
                     rowBuffer[i] = memory[rowNum][i];
                 }
                 if (isFirst == false) {
-                    regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+rowDelay) +"\nDRAM: Writeback Row: " + to_string(currRow);
+                    regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+rowDelay) +"\n  DRAM: Writeback Row: " + to_string(currRow);
                     initialClock += rowDelay;
+                    updated = true;
+
+                }
+                else {
+                    updated = false;
                 }
                 isFirst = false;
-                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+rowDelay) +"\nDRAM: Activate Row: " + to_string(rowNum);
+                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+rowDelay) +"\n  DRAM: Activate Row: " + to_string(rowNum);
                 initialClock += rowDelay;
                 updates[0] += 1;
                 currRow = rowNum;
             }
+            else {
+                updated = false;
+            }
         }
         else if (relClock == rowDelay +colDelay) {
             if (currInst.at(0) == "lw") {
-                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock +colDelay) +"\nDRAM: Column Access: " + to_string(colNum);
+                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock +colDelay) +"\n  DRAM: Column Access: " + to_string(colNum);
                 regs[changeReg] = rowBuffer[colNum];
-                regSteps = regSteps+ "\nRegister modified : " + changeReg + " = " + to_string(regs[changeReg]);
+                regSteps = regSteps+ "\n  Register modified : " + changeReg + " = " + to_string(regs[changeReg]);
                 updates[1] += 1;
             }
             else if (currInst.at(0) == "sw"){
-                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+colDelay) +"\nDRAM: Column Access: " + to_string(colNum);
+                regSteps = regSteps + "\nClock: " + to_string(initialClock+1) + "-"+ to_string(initialClock+colDelay) +"\n  DRAM: Column Access: " + to_string(colNum);
                 rowBuffer[colNum] = regs[changeReg];
-                regSteps = regSteps+ "\nMemory address modified : " + to_string(address) + " = " + to_string(regs[changeReg]);
+                regSteps = regSteps+ "\n  Memory address modified : " + to_string(address) + " = " + to_string(regs[changeReg]);
                 updates[1] += 1;
             }
             isOn = false;
@@ -706,24 +735,28 @@ class MIPS2 {
         } 
     }
 
-    void printRegSet(int k, vector<string> v, string ramRegSteps){
+    void printRegSet(int k, vector<string> v, string ramRegSteps,bool c){
         string task = v.at(0);
         if (task != "lw" && task != "sw"){
-            regSteps = regSteps + "\n" + "\n-----------------------------Line: " +to_string(k) + "----------------------------";
+            regSteps = regSteps + "\n-----------------------------Line: " +to_string(k) + "----------------------------";
             if (ramRegSteps != ""){
                 regSteps += ramRegSteps + "\n";   
             }
-            regSteps+= "\nClock: " + to_string(ram.clock) +"\nInstruction called: ";
+            regSteps+= "\nClock: " + to_string(ram.clock) +"\n  Instruction called: ";
 
 
             printInstSet(v);            
 
             if (task == "add" || task == "sub" || task == "mul" || task == "addi" || task == "slt"){
-                regSteps = regSteps+ "\nRegister modified : " + v.at(1) + " = " + to_string(ram.regs[v.at(1)]); 
+                regSteps = regSteps+ "\n  Register modified : " + v.at(1) + " = " + to_string(ram.regs[v.at(1)]); 
             }
 
-            regSteps = regSteps + "\n";
+            if (c==false) {
+                regSteps += "\n  **DRAM Execution going on**";
+            }
+
         }
+        regSteps = regSteps + "\n";
     }
 
     void printReg(){
@@ -745,6 +778,15 @@ class MIPS2 {
             }
         }
     }
+    void printregVal() {
+        cout << "\nNon zero register values:"<<endl;
+
+         for (map<string, int>::iterator itr = ram.regs.begin(); itr != ram.regs.end(); ++itr) { 
+             if (itr->second != 0){
+                cout << itr->first  << " = " << itr->second << " | "; 
+             }
+        } 
+    }
 
     void printInstCount() {
         cout<< "Number of row buffer updates: " << ram.updates[0]<<endl;
@@ -755,6 +797,7 @@ class MIPS2 {
         for (int i =0; i< 10; i++) {
             cout << inst[i] << ": "<< instCount[i]<<endl;
         }
+        printregVal();
     }
 
     bool isError(vector<string> v,int line) {
@@ -894,7 +937,7 @@ class MIPS2 {
     }
 
 
-    void ramCheck(vector<string> v){
+    bool ramCheck(vector<string> v){
         if (ram.isOn){
             string task = v.at(0);
             if (task == "add" || task == "addi" || task == "mul" || task == "sub" || task == "slt"){
@@ -907,10 +950,12 @@ class MIPS2 {
                     ram.clock = ram.colDelay + ram.initialClock; 
                     ram.relClock = ram.colDelay + ram.rowDelay;
                     ram.check();
+                    return true;
                 }
                 else {
                     ram.relClock+=1;
                     ram.check();
+                    return false;
                 }
             }
 
@@ -924,14 +969,17 @@ class MIPS2 {
                     ram.clock = ram.colDelay + ram.initialClock; 
                     ram.relClock = ram.colDelay + ram.rowDelay;
                     ram.check();
+                    return true;
                 }
                 else {
                     ram.relClock+=1;
                     ram.check();
+                    return false;
                 }
             }
 
         }
+        return true;
     }
 
 
@@ -953,6 +1001,7 @@ class MIPS2 {
         int i=1;
         int n=instructions.size()+1;
         int k=1;
+        bool c = true;
         while(i<n){
             vector<string> v=instructions.at(i);
             auto pointer = lineCount.find(i);
@@ -962,28 +1011,28 @@ class MIPS2 {
                     return false;
                 }
                 if (a=="add"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     ram.clock+=1;
                     feedReg(v.at(1),getRegValue(v.at(3))+getRegValue(v.at(5)));
                     instCount[0] += 1;
                     i++;
                 }
                 else if (a=="sub"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     ram.clock+=1;
                     feedReg(v.at(1),getRegValue(v.at(3))-getRegValue(v.at(5)));
                     instCount[2] += 1;
                     i++;
                 }
                 else if (a=="mul"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     ram.clock+=1;
                     feedReg(v.at(1),getRegValue(v.at(3))*getRegValue(v.at(5)));
                     instCount[3] += 1;
                     i++;              
                 }
                 else if (a=="addi"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     ram.clock+=1;
                     feedReg(v.at(1),getRegValue(v.at(3))+stoi(v.at(5)));
                     instCount[1] += 1;
@@ -993,9 +1042,14 @@ class MIPS2 {
                     doit();
                     ram.clock += 1;
                     regSteps += ram.regSteps + "\n";
-                    regSteps = regSteps + "\n"  +"\n-----------------------------Line: " +to_string(k) + "----------------------------"+  "\nClock: " + to_string(ram.clock) + "\nInstruction called: ";
+                    regSteps = regSteps  +"-----------------------------Line: " +to_string(k) + "----------------------------"+  "\nClock: " + to_string(ram.clock) + "\n  Instruction called: ";
                     printInstSet(v);
+                    regSteps += "\n  DRAM request issued";
                     ram.start(v);
+                    if (ram.address%4 !=0 || ram.address <0 || ram.address >= 4*1024*256){
+                        cout << "INVALID address of memory at line "<< k<<endl;
+                        return false;
+                    }
                     i++;
                     if (a == "sw"){
                         instCount[8] += 1;    
@@ -1021,7 +1075,7 @@ class MIPS2 {
                     }
                 }
                 else if (a=="beq"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     if (getRegValue(v.at(1))==getRegValue(v.at(3))){
                         i=stoi(v.at(5))/4+1;
                     }
@@ -1032,7 +1086,7 @@ class MIPS2 {
                     instCount[4] += 1;             
                 }
                 else if (a=="bne"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     if (getRegValue(v.at(1))!=getRegValue(v.at(3))){
                         i=stoi(v.at(5))/4+1;
                     }
@@ -1043,7 +1097,7 @@ class MIPS2 {
                     instCount[5] += 1;              
                 }
                 else if (a=="slt"){
-                    ramCheck(v);
+                    c=ramCheck(v);
                     if (getRegValue(v.at(3))<getRegValue(v.at(5))){
                         feedReg(v.at(1),1);
                     }
@@ -1060,14 +1114,16 @@ class MIPS2 {
                     return false;
                     break;
                 } 
-                printRegSet(k,v,ram.regSteps);
+                printRegSet(k,v,ram.regSteps,c);
                 ram.regSteps = "";
         }
 
         if (ram.isOn == true){
             doit();
-            ram.finalWrite();
             regSteps += ram.regSteps + "\n";
+        }
+        if (ram.updated == false) {
+            ram.finalWrite();
         }
         return true;
 
