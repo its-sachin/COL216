@@ -1,0 +1,28 @@
+Testcase 1 output
+
+Total number of cycles: 91
+
+Memory content at the end of the execution:
+
+1000-1003: 1
+1024-1027: 2
+1028-1031: 3
+
+Every cycle description
+
+cycle 1: $s0=1000
+cycle 2: $s1=1024
+cycle 3: $t0=1
+cycle 4: $t1=2
+cycle 5: DRAM request issued
+cycle 6-17: memory address 1000-1003= 1
+cycle 18: DRAM request issued
+cycle 19-40: memory address 1024-1027 = 2
+cycle 41: DRAM request issued
+cycle 42-63: $t2=1
+cycle 64: DRAM request issued
+cycle 65-86: t3=2
+cycle 87: $t3=3
+cycle 88: $s2=1028
+cycle 89: DRAM request issued
+cycle 90-91: Memory address 1028 = 3
