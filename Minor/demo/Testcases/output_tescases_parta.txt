@@ -1,0 +1,462 @@
+
+*****************************To check if correct row buffer is activated*********************
+
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+lw $t0, 0($s0)
+lw $t1, 0($s1)
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  lw $t0, 0( $s0)
+DRAM request issued
+Clock: 4-13
+DRAM: Activate Row: 0
+Clock: 14-15
+DRAM: Column Access: 250
+Register modified : $t0 = 0
+
+-----------------------------Line: 4----------------------------
+Clock: 16
+Instruction called:  lw $t1, 0( $s1)
+DRAM request issued
+Clock: 17-26
+DRAM: Writeback Row: 0
+Clock: 27-36
+DRAM: Activate Row: 1
+Clock: 37-38
+DRAM: Column Access: 244
+Register modified : $t1 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 38
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 2
+
+Memory Updates
+
+Execution count of instructions:
+add: 0
+addi: 2
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 0
+j: 0
+
+
+*************************Check for the case when no need to writeback and activate new rowbuffer***********************************
+
+
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+addi $s2, $t0, 2004
+lw $t0, 0($s0)
+lw $t1, 0($s1)
+lw $t1, 0($s2)
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  addi $s2, $t0, 2004
+Register modified : $s2 = 2004
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+Instruction called:  lw $t0, 0( $s0)
+DRAM request issued
+Clock: 5-14
+DRAM: Activate Row: 0
+Clock: 15-16
+DRAM: Column Access: 250
+Register modified : $t0 = 0
+
+-----------------------------Line: 5----------------------------
+Clock: 17
+Instruction called:  lw $t1, 0( $s1)
+DRAM request issued
+Clock: 18-27
+DRAM: Writeback Row: 0
+Clock: 28-37
+DRAM: Activate Row: 1
+Clock: 38-39
+DRAM: Column Access: 244
+Register modified : $t1 = 0
+
+-----------------------------Line: 6----------------------------
+Clock: 40
+Instruction called:  lw $t1, 0( $s2)
+DRAM request issued
+Clock: 41-42
+DRAM: Column Access: 245
+Register modified : $t1 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 42
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 3
+
+Memory Updates
+
+Execution count of instructions:
+add: 0
+addi: 3
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 3
+sw: 0
+j: 0
+
+
+
+*********************************************previous test cases for sw*****************************************
+
+
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+sw $t0, 0($s0)
+sw $t1, 0($s1)
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  sw $t0, 0( $s0)
+DRAM request issued
+Clock: 4-13
+DRAM: Activate Row: 0
+Clock: 14-15
+DRAM: Column Access: 250
+Memory address modified : 1000 = 0
+
+-----------------------------Line: 4----------------------------
+Clock: 16
+Instruction called:  sw $t1, 0( $s1)
+DRAM request issued
+Clock: 17-26
+DRAM: Writeback Row: 0
+Clock: 27-36
+DRAM: Activate Row: 1
+Clock: 37-38
+DRAM: Column Access: 244
+Memory address modified : 2000 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 38
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 2
+
+Memory Updates
+
+Execution count of instructions:
+add: 0
+addi: 2
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 0
+sw: 2
+j: 0
+
+
+*****************************************************
+
+
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+addi $s2, $t0, 2004
+sw $t0, 0($s0)
+sw $t1, 0($s1)
+sw $t1, 0($s2)
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  addi $s2, $t0, 2004
+Register modified : $s2 = 2004
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+Instruction called:  sw $t0, 0( $s0)
+DRAM request issued
+Clock: 5-14
+DRAM: Activate Row: 0
+Clock: 15-16
+DRAM: Column Access: 250
+Memory address modified : 1000 = 0
+
+-----------------------------Line: 5----------------------------
+Clock: 17
+Instruction called:  sw $t1, 0( $s1)
+DRAM request issued
+Clock: 18-27
+DRAM: Writeback Row: 0
+Clock: 28-37
+DRAM: Activate Row: 1
+Clock: 38-39
+DRAM: Column Access: 244
+Memory address modified : 2000 = 0
+
+-----------------------------Line: 6----------------------------
+Clock: 40
+Instruction called:  sw $t1, 0( $s2)
+DRAM request issued
+Clock: 41-42
+DRAM: Column Access: 245
+Memory address modified : 2004 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 42
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 3
+
+Memory Updates
+
+Execution count of instructions:
+add: 0
+addi: 3
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 0
+sw: 3
+j: 0
+
+
+
+
+************************************************previous 2 cases when lw and sw both occurs********************************************8
+
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+addi $s2, $t0, 2004
+sw $t0, 0($s0)
+lw $t1, 0($s1)
+sw $t1, 0($s2)
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  addi $s2, $t0, 2004
+Register modified : $s2 = 2004
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+Instruction called:  sw $t0, 0( $s0)
+DRAM request issued
+Clock: 5-14
+DRAM: Activate Row: 0
+Clock: 15-16
+DRAM: Column Access: 250
+Memory address modified : 1000 = 0
+
+-----------------------------Line: 5----------------------------
+Clock: 17
+Instruction called:  lw $t1, 0( $s1)
+DRAM request issued
+Clock: 18-27
+DRAM: Writeback Row: 0
+Clock: 28-37
+DRAM: Activate Row: 1
+Clock: 38-39
+DRAM: Column Access: 244
+Register modified : $t1 = 0
+
+-----------------------------Line: 6----------------------------
+Clock: 40
+Instruction called:  sw $t1, 0( $s2)
+DRAM request issued
+Clock: 41-42
+DRAM: Column Access: 245
+Memory address modified : 2004 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 42
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 3
+
+Memory Updates
+
+Execution count of instructions:
+add: 0
+addi: 3
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 1
+sw: 2
+j: 0
+
+
+
+
+******************************************************testcases to check that right value is upated in register and memory***************************************
+
+
+addi $t1, $t0, 5
+addi $s0, $t0, 1000
+addi $s1, $t0, 2000
+addi $s2, $t0, 2004
+sw $t1, 0($s0)
+lw $t1, 0($s1)
+sw $t1, 0($s2)
+
+
+
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+Instruction called:  addi $t1, $t0, 5
+Register modified : $t1 = 5
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+Instruction called:  addi $s0, $t0, 1000
+Register modified : $s0 = 1000
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+Instruction called:  addi $s1, $t0, 2000
+Register modified : $s1 = 2000
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+Instruction called:  addi $s2, $t0, 2004
+Register modified : $s2 = 2004
+
+
+-----------------------------Line: 5----------------------------
+Clock: 5
+Instruction called:  sw $t1, 0( $s0)
+DRAM request issued
+Clock: 6-15
+DRAM: Activate Row: 0
+Clock: 16-17
+DRAM: Column Access: 250
+Memory address modified : 1000 = 5
+
+-----------------------------Line: 6----------------------------
+Clock: 18
+Instruction called:  lw $t1, 0( $s1)
+DRAM request issued
+Clock: 19-28
+DRAM: Writeback Row: 0
+Clock: 29-38
+DRAM: Activate Row: 1
+Clock: 39-40
+DRAM: Column Access: 244
+Register modified : $t1 = 0
+
+-----------------------------Line: 7----------------------------
+Clock: 41
+Instruction called:  sw $t1, 0( $s2)
+DRAM request issued
+Clock: 42-43
+DRAM: Column Access: 245
+Memory address modified : 2004 = 0
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 43
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 3
+
+Memory Updates
+1000-1003 =5
+
+Execution count of instructions:
+add: 0
+addi: 4
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 1
+sw: 2
+j: 0

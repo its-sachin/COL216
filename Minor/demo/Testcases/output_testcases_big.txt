@@ -1,0 +1,790 @@
+addi $t0, $t0, 5
+sw $t0, 0($s0)
+lw $t1, 1000($s0)
+addi $t1, $t1, 1
+addi $t1, $t0, 1
+add $t1, $t1, $t0
+sw $s1, 100($s0)
+addi $t2, $t2, 1
+sub $s3, $s1, $s0
+sub $t0, $t0, $t2
+mul $s0, $t0, $t0
+lw $t5, 8000($s0)
+add $s0, $t0, $t5
+
+delay = 4,2
+
+parta 
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $t0, $t0, 5
+  Register modified : $t0 = 5
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+Clock: 3-6
+  DRAM: Activate Row: 0
+Clock: 7-8
+  DRAM: Column Access: 0
+  Memory address modified : 0 = 5
+
+-----------------------------Line: 3----------------------------
+Clock: 9
+  Instruction called:  lw $t1, 1000( $s0)
+  DRAM request issued
+Clock: 10-11
+  DRAM: Column Access: 250
+  Register modified : $t1 = 0
+
+-----------------------------Line: 4----------------------------
+Clock: 12
+  Instruction called:  addi $t1, $t1, 1
+  Register modified : $t1 = 1
+
+
+-----------------------------Line: 5----------------------------
+Clock: 13
+  Instruction called:  addi $t1, $t0, 1
+  Register modified : $t1 = 6
+
+
+-----------------------------Line: 6----------------------------
+Clock: 14
+  Instruction called:  add $t1, $t1, $t0
+  Register modified : $t1 = 11
+
+
+-----------------------------Line: 7----------------------------
+Clock: 15
+  Instruction called:  sw $s1, 100( $s0)
+  DRAM request issued
+Clock: 16-17
+  DRAM: Column Access: 25
+  Memory address modified : 100 = 0
+
+-----------------------------Line: 8----------------------------
+Clock: 18
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 1
+
+
+-----------------------------Line: 9----------------------------
+Clock: 19
+  Instruction called:  sub $s3, $s1, $s0
+  Register modified : $s3 = 0
+
+
+-----------------------------Line: 10----------------------------
+Clock: 20
+  Instruction called:  sub $t0, $t0, $t2
+  Register modified : $t0 = 4
+
+
+-----------------------------Line: 11----------------------------
+Clock: 21
+  Instruction called:  mul $s0, $t0, $t0
+  Register modified : $s0 = 16
+
+
+-----------------------------Line: 12----------------------------
+Clock: 22
+  Instruction called:  lw $t5, 8000( $s0)
+  DRAM request issued
+Clock: 23-26
+  DRAM: Writeback Row: 0
+Clock: 27-30
+  DRAM: Activate Row: 7
+Clock: 31-32
+  DRAM: Column Access: 212
+  Register modified : $t5 = 0
+
+-----------------------------Line: 13----------------------------
+Clock: 33
+  Instruction called:  add $s0, $t0, $t5
+  Register modified : $s0 = 4
+
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 33
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 4
+
+Memory Updates
+0-3 =5
+
+Execution count of instructions:
+add: 2
+addi: 4
+sub: 2
+mul: 1
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = 4 | $t0 = 4 | $t1 = 11 | $t2 = 1 |
+
+
+partb 
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $t0, $t0, 5
+  Register modified : $t0 = 5
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+
+Clock: 3-6
+  DRAM: Activate Row: 0
+Clock: 7-8
+  DRAM: Column Access: 0
+  Memory address modified : 0 = 5
+-----------------------------Line: 3----------------------------
+Clock: 9
+  Instruction called:  lw $t1, 1000( $s0)
+  DRAM request issued
+
+-----------------------------Line: 4----------------------------
+Clock: 10-11
+  DRAM: Column Access: 250
+  Register modified : $t1 = 0
+
+Clock: 12
+  Instruction called:  addi $t1, $t1, 1
+  Register modified : $t1 = 1
+
+-----------------------------Line: 5----------------------------
+Clock: 13
+  Instruction called:  addi $t1, $t0, 1
+  Register modified : $t1 = 6
+
+-----------------------------Line: 6----------------------------
+Clock: 14
+  Instruction called:  add $t1, $t1, $t0
+  Register modified : $t1 = 11
+
+-----------------------------Line: 7----------------------------
+Clock: 15
+  Instruction called:  sw $s1, 100( $s0)
+  DRAM request issued
+
+-----------------------------Line: 8----------------------------
+Clock: 16
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 1
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 9----------------------------
+Clock: 16-17
+  DRAM: Column Access: 25
+  Memory address modified : 100 = 0
+
+Clock: 18
+  Instruction called:  sub $s3, $s1, $s0
+  Register modified : $s3 = 0
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 10----------------------------
+Clock: 19
+  Instruction called:  sub $t0, $t0, $t2
+  Register modified : $t0 = 4
+
+-----------------------------Line: 11----------------------------
+Clock: 20
+  Instruction called:  mul $s0, $t0, $t0
+  Register modified : $s0 = 16
+
+-----------------------------Line: 12----------------------------
+Clock: 21
+  Instruction called:  lw $t5, 8000( $s0)
+  DRAM request issued
+
+-----------------------------Line: 13----------------------------
+Clock: 22-25
+  DRAM: Writeback Row: 0
+Clock: 26-29
+  DRAM: Activate Row: 7
+Clock: 30-31
+  DRAM: Column Access: 212
+  Register modified : $t5 = 0
+
+Clock: 32
+  Instruction called:  add $s0, $t0, $t5
+  Register modified : $s0 = 4
+
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 32
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 4
+
+Memory Updates
+0-3 =5
+
+Execution count of instructions:
+add: 2
+addi: 4
+sub: 2
+mul: 1
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = 4 | $t0 = 4 | $t1 = 11 | $t2 = 1 |
+
+
+output of both matches, only number of clocks is different
+
+
+
+
+addi $t0, $t0, 5
+sw $t0, 0($s0)
+addi $t2, $t2, 1
+addi $t3, $t0, 1
+add $t2, $t1, $t0
+addi $t2, $t2, 2
+sw $s1, 100($s0)
+addi $t2, $t2, 1
+addi $t3, $t0, 1
+add $t2, $t1, $t0
+lw $t1, 1000($s0)
+addi $t2, $t2, 2
+sub $s3, $s1, $s0
+sub $t0, $t0, $t2
+mul $s0, $t0, $t0
+lw $t5, 8000($s0)
+add $s0, $t0, $t5
+
+delay = 10,2
+
+parta
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $t0, $t0, 5
+  Register modified : $t0 = 5
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+Clock: 3-12
+  DRAM: Activate Row: 0
+Clock: 13-14
+  DRAM: Column Access: 0
+  Memory address modified : 0 = 5
+
+-----------------------------Line: 3----------------------------
+Clock: 15
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 1
+
+
+-----------------------------Line: 4----------------------------
+Clock: 16
+  Instruction called:  addi $t3, $t0, 1
+  Register modified : $t3 = 6
+
+
+-----------------------------Line: 5----------------------------
+Clock: 17
+  Instruction called:  add $t2, $t1, $t0
+  Register modified : $t2 = 5
+
+
+-----------------------------Line: 6----------------------------
+Clock: 18
+  Instruction called:  addi $t2, $t2, 2
+  Register modified : $t2 = 7
+
+
+-----------------------------Line: 7----------------------------
+Clock: 19
+  Instruction called:  sw $s1, 100( $s0)
+  DRAM request issued
+Clock: 20-21
+  DRAM: Column Access: 25
+  Memory address modified : 100 = 0
+
+-----------------------------Line: 8----------------------------
+Clock: 22
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 8
+
+
+-----------------------------Line: 9----------------------------
+Clock: 23
+  Instruction called:  addi $t3, $t0, 1
+  Register modified : $t3 = 6
+
+
+-----------------------------Line: 10----------------------------
+Clock: 24
+  Instruction called:  add $t2, $t1, $t0
+  Register modified : $t2 = 5
+
+
+-----------------------------Line: 11----------------------------
+Clock: 25
+  Instruction called:  lw $t1, 1000( $s0)
+  DRAM request issued
+Clock: 26-27
+  DRAM: Column Access: 250
+  Register modified : $t1 = 0
+
+-----------------------------Line: 12----------------------------
+Clock: 28
+  Instruction called:  addi $t2, $t2, 2
+  Register modified : $t2 = 7
+
+
+-----------------------------Line: 13----------------------------
+Clock: 29
+  Instruction called:  sub $s3, $s1, $s0
+  Register modified : $s3 = 0
+
+
+-----------------------------Line: 14----------------------------
+Clock: 30
+  Instruction called:  sub $t0, $t0, $t2
+  Register modified : $t0 = -2
+
+
+-----------------------------Line: 15----------------------------
+Clock: 31
+  Instruction called:  mul $s0, $t0, $t0
+  Register modified : $s0 = 4
+
+
+-----------------------------Line: 16----------------------------
+Clock: 32
+  Instruction called:  lw $t5, 8000( $s0)
+  DRAM request issued
+Clock: 33-42
+  DRAM: Writeback Row: 0
+Clock: 43-52
+  DRAM: Activate Row: 7
+Clock: 53-54
+  DRAM: Column Access: 209
+  Register modified : $t5 = 0
+
+-----------------------------Line: 17----------------------------
+Clock: 55
+  Instruction called:  add $s0, $t0, $t5
+  Register modified : $s0 = -2
+
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 55
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 4
+
+Memory Updates
+0-3 =5
+
+Execution count of instructions:
+add: 3
+addi: 7
+sub: 2
+mul: 1
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = -2 | $t0 = -2 | $t2 = 7 | $t3 = 6 |
+
+partb 
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $t0, $t0, 5
+  Register modified : $t0 = 5
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 1
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+  Instruction called:  addi $t3, $t0, 1
+  Register modified : $t3 = 6
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 5----------------------------
+Clock: 5
+  Instruction called:  add $t2, $t1, $t0
+  Register modified : $t2 = 5
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 6----------------------------
+Clock: 6
+  Instruction called:  addi $t2, $t2, 2
+  Register modified : $t2 = 7
+  <<DRAM Execution going on>>
+
+Clock: 3-12
+  DRAM: Activate Row: 0
+Clock: 13-14
+  DRAM: Column Access: 0
+  Memory address modified : 0 = 5
+-----------------------------Line: 7----------------------------
+Clock: 15
+  Instruction called:  sw $s1, 100( $s0)
+  DRAM request issued
+
+-----------------------------Line: 8----------------------------
+Clock: 16
+  Instruction called:  addi $t2, $t2, 1
+  Register modified : $t2 = 8
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 9----------------------------
+Clock: 16-17
+  DRAM: Column Access: 25
+  Memory address modified : 100 = 0
+
+Clock: 18
+  Instruction called:  addi $t3, $t0, 1
+  Register modified : $t3 = 6
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 10----------------------------
+Clock: 19
+  Instruction called:  add $t2, $t1, $t0
+  Register modified : $t2 = 5
+
+-----------------------------Line: 11----------------------------
+Clock: 20
+  Instruction called:  lw $t1, 1000( $s0)
+  DRAM request issued
+
+-----------------------------Line: 12----------------------------
+Clock: 21
+  Instruction called:  addi $t2, $t2, 2
+  Register modified : $t2 = 7
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 13----------------------------
+Clock: 21-22
+  DRAM: Column Access: 250
+  Register modified : $t1 = 0
+
+Clock: 23
+  Instruction called:  sub $s3, $s1, $s0
+  Register modified : $s3 = 0
+  <<DRAM Execution going on>>
+
+-----------------------------Line: 14----------------------------
+Clock: 24
+  Instruction called:  sub $t0, $t0, $t2
+  Register modified : $t0 = -2
+
+-----------------------------Line: 15----------------------------
+Clock: 25
+  Instruction called:  mul $s0, $t0, $t0
+  Register modified : $s0 = 4
+
+-----------------------------Line: 16----------------------------
+Clock: 26
+  Instruction called:  lw $t5, 8000( $s0)
+  DRAM request issued
+
+-----------------------------Line: 17----------------------------
+Clock: 27-36
+  DRAM: Writeback Row: 0
+Clock: 37-46
+  DRAM: Activate Row: 7
+Clock: 47-48
+  DRAM: Column Access: 209
+  Register modified : $t5 = 0
+
+Clock: 49
+  Instruction called:  add $s0, $t0, $t5
+  Register modified : $s0 = -2
+
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 49
+
+Number of row buffer updates: 2
+Total number of changes made in row buffer: 4
+
+Memory Updates
+0-3 =5
+
+Execution count of instructions:
+add: 3
+addi: 7
+sub: 2
+mul: 1
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = -2 | $t0 = -2 | $t2 = 7 | $t3 = 6 |
+
+
+
+
+
+
+addi $s0, $zero, 1000
+ addi $s1, $zero, 1024
+ addi $t0, $zero, 1
+ addi $t1, $zero, 2
+ sw $t0, 0($s0)
+ sw $t1, 0($s1)
+ 
+ lw $t2, 0($s0)
+ lw $t3, 0($s1)
+
+
+
+parta
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $s0, $zero, 1000
+  Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  addi $s1, $zero, 1024
+  Register modified : $s1 = 1024
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+  Instruction called:  addi $t0, $zero, 1
+  Register modified : $t0 = 1
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+  Instruction called:  addi $t1, $zero, 2
+  Register modified : $t1 = 2
+
+
+-----------------------------Line: 5----------------------------
+Clock: 5
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+Clock: 6-15
+  DRAM: Activate Row: 0
+Clock: 16-17
+  DRAM: Column Access: 250
+  Memory address modified : 1000 = 1
+
+-----------------------------Line: 6----------------------------
+Clock: 18
+  Instruction called:  sw $t1, 0( $s1)
+  DRAM request issued
+Clock: 19-28
+  DRAM: Writeback Row: 0
+Clock: 29-38
+  DRAM: Activate Row: 1
+Clock: 39-40
+  DRAM: Column Access: 0
+  Memory address modified : 1024 = 2
+
+-----------------------------Line: 8----------------------------
+Clock: 41
+  Instruction called:  lw $t2, 0( $s0)
+  DRAM request issued
+Clock: 42-51
+  DRAM: Writeback Row: 1
+Clock: 52-61
+  DRAM: Activate Row: 0
+Clock: 62-63
+  DRAM: Column Access: 250
+  Register modified : $t2 = 1
+
+-----------------------------Line: 9----------------------------
+Clock: 64
+  Instruction called:  lw $t3, 0( $s1)
+  DRAM request issued
+Clock: 65-74
+  DRAM: Writeback Row: 0
+Clock: 75-84
+  DRAM: Activate Row: 1
+Clock: 85-86
+  DRAM: Column Access: 0
+  Register modified : $t3 = 2
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 86
+
+Number of row buffer updates: 4
+Total number of changes made in row buffer: 4
+
+Memory Updates
+1000-1003 =1
+1024-1027 =2
+
+Execution count of instructions:
+add: 0
+addi: 4
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = 1000 | $s1 = 1024 | $t0 = 1 | $t1 = 2 | $t2 = 1 | $t3 = 2 |
+
+partb
+
+
+-----------------------------Line: 1----------------------------
+Clock: 1
+  Instruction called:  addi $s0, $zero, 1000
+  Register modified : $s0 = 1000
+
+
+-----------------------------Line: 2----------------------------
+Clock: 2
+  Instruction called:  addi $s1, $zero, 1024
+  Register modified : $s1 = 1024
+
+
+-----------------------------Line: 3----------------------------
+Clock: 3
+  Instruction called:  addi $t0, $zero, 1
+  Register modified : $t0 = 1
+
+
+-----------------------------Line: 4----------------------------
+Clock: 4
+  Instruction called:  addi $t1, $zero, 2
+  Register modified : $t1 = 2
+
+
+
+-----------------------------Line: 5----------------------------
+Clock: 5
+  Instruction called:  sw $t0, 0( $s0)
+  DRAM request issued
+Clock: 6-15
+  DRAM: Activate Row: 0
+Clock: 16-17
+  DRAM: Column Access: 250
+  Memory address modified : 1000 = 1
+
+
+-----------------------------Line: 6----------------------------
+Clock: 18
+  Instruction called:  sw $t1, 0( $s1)
+  DRAM request issued
+Clock: 19-28
+  DRAM: Writeback Row: 0
+Clock: 29-38
+  DRAM: Activate Row: 1
+Clock: 39-40
+  DRAM: Column Access: 0
+  Memory address modified : 1024 = 2
+
+
+-----------------------------Line: 8----------------------------
+Clock: 41
+  Instruction called:  lw $t2, 0( $s0)
+  DRAM request issued
+Clock: 42-51
+  DRAM: Writeback Row: 1
+Clock: 52-61
+  DRAM: Activate Row: 0
+Clock: 62-63
+  DRAM: Column Access: 250
+  Register modified : $t2 = 1
+
+
+-----------------------------Line: 9----------------------------
+Clock: 64
+  Instruction called:  lw $t3, 0( $s1)
+  DRAM request issued
+Clock: 65-74
+  DRAM: Writeback Row: 0
+Clock: 75-84
+  DRAM: Activate Row: 1
+Clock: 85-86
+  DRAM: Column Access: 0
+  Register modified : $t3 = 2
+
+
+------------------------------------------Execution complete-------------------------------------
+
+Number of clock Cycles: 86
+
+Number of row buffer updates: 4
+Total number of changes made in row buffer: 4
+
+Memory Updates
+1000-1003 =1
+1024-1027 =2
+
+Execution count of instructions:
+add: 0
+addi: 4
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 2
+sw: 2
+j: 0
+
+Non zero register values:
+$s0 = 1000 | $s1 = 1024 | $t0 = 1 | $t1 = 2 | $t2 = 1 | $t3 = 2 |
+
+
+
+
+
+
+

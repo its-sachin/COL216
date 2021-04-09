@@ -48,7 +48,7 @@ main:
  
     # telling the user to enter number of points
     li $v0, 4
-    la $a0, n
+    la $a0, n 
     syscall
 
     # read the value of n and store in s0
@@ -111,7 +111,7 @@ main:
         syscall
         move $t3, $v0
 
-        add $s1, $s1, 1
+        addi $s1, $s1, 1
 
         beqz $s2,area
         beq $s2, 1, firstInput
