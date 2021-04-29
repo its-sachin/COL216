@@ -1,0 +1,12 @@
+Clock 168
+add: 0
+addi: 9
+sub: 0
+mul: 0
+beq: 0
+bne: 0
+slt: 0
+lw: 8
+sw: 0
+j: 0
+$s0 = 12 | $s1 = 8 | $t0 = 12 | 
